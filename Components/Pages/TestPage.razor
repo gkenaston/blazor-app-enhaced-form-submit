@@ -1,0 +1,68 @@
+﻿@page "/test"
+
+<HeadContent>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    @* <script src="@($"https://www.google.com/recaptcha/api.js?render={Configuration["Google:CaptchaKey"]}")"></script> *@
+    <script>
+        function onSubmit(token) {
+          document.getElementById("test-form").submit();
+        }
+
+        function onClick() {
+            console.log('onClick');
+
+            // does a full-page refresh
+            //document.getElementById("test-form").submit();
+
+            // does an enhanced post
+            //document.getElementById("form-button").click();
+
+            // works
+            // ref: https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/requestSubmit
+            // let myForm = document.querySelector("form");
+            // let submitButton = myForm.querySelector("#form-button");
+            // myForm.requestSubmit(submitButton);
+        }
+
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const form = document.getElementById('test-form');
+        //     if (form) {
+        //         form.addEventListener('submit', function(e) {
+        //             e.preventDefault();
+        //             this.submit();
+        //         });
+        //     }
+        // });
+    </script>
+</HeadContent>
+
+<PageScript Src="./Components/Pages/TestPage.razor.js" />
+
+<form id="test-form" method="post" @formname="TestForm" @onsubmit=OnSubmit data-enhance>
+    <AntiforgeryToken />
+
+    <input name="Model.Name" value="@Model.Name" />
+
+    <input type="hidden" name="Model.CaptchaKey" value="@(Configuration["Google:CaptchaKey"])" />
+    <input type="hidden" name="Model.CaptchaToken" />
+
+    <button id="form-button" type="submit" x-hidden>Submit</button>
+    <button type="button" onclick="javascript:onClick();">Button Inside Form</button>
+</form>
+
+<div class="g-recaptcha"
+     data-sitekey="@(Configuration["Google:CaptchaKey"])"
+     x-data-callback="onSubmit"
+     data-size="invisible" 
+     data-permanent></div>
+
+@* <button class="g-recaptcha"
+        data-sitekey="6LdRGRcaAAAAABbHTY4T3aLF9Zxe1J520LlnGYxN"
+        data-callback='onSubmit'
+        data-action='login'>
+    Captcha Submit
+</button> *@
+
+@* <script src="@($"https://www.google.com/recaptcha/api.js?render={Configuration["Google:CaptchaKey"]}")"
+        async defer>
+</script> *@
