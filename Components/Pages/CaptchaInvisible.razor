@@ -1,0 +1,23 @@
+﻿@page "/captcha/invisible"
+
+<HeadContent>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</HeadContent>
+
+<PageScript Src="./Components/Pages/CaptchaInvisible.razor.js" />
+
+<form method="post" @formname="TestForm" @onsubmit=OnSubmit data-enhance novalidate>
+    <AntiforgeryToken />
+
+    <input name="Model.Name" value="@Model.Name" />
+    <input type="hidden" name="Model.CaptchaToken" />
+
+    <input type="submit" hidden />
+    <button type="button">Submit</button>
+</form>
+
+<div class="g-recaptcha"
+     data-sitekey="6LecDpUqAAAAAEPWb9C5EGodwdQodjme3dUe8Cwp"
+     data-callback="onCallback"
+     data-size="invisible"
+     data-permanent></div>

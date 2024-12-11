@@ -1,7 +1,7 @@
 ﻿@page "/test"
 
 <HeadContent>
-    <script src="https://www.google.com/recaptcha/api.js"></script>
+    @* <script src="https://www.google.com/recaptcha/api.js"></script> *@
     @* <script src="@($"https://www.google.com/recaptcha/api.js?render={Configuration["Google:CaptchaKey"]}")"></script> *@
     <script>
         function onSubmit(token) {
@@ -38,7 +38,7 @@
 
 <PageScript Src="./Components/Pages/TestPage.razor.js" />
 
-<form id="test-form" method="post" @formname="TestForm" @onsubmit=OnSubmit data-enhance>
+<form method="post" @formname="TestForm" @onsubmit=OnSubmit data-enhance novalidate>
     <AntiforgeryToken />
 
     <input name="Model.Name" value="@Model.Name" />
@@ -46,15 +46,15 @@
     <input type="hidden" name="Model.CaptchaKey" value="@(Configuration["Google:CaptchaKey"])" />
     <input type="hidden" name="Model.CaptchaToken" />
 
-    <button id="form-button" type="submit" x-hidden>Submit</button>
-    <button type="button" onclick="javascript:onClick();">Button Inside Form</button>
+    <input type="submit" value="Submit (input)" />
+    <button type="button">Submit (button)</button>
 </form>
 
-<div class="g-recaptcha"
+@* <div class="g-recaptcha"
      data-sitekey="@(Configuration["Google:CaptchaKey"])"
      x-data-callback="onSubmit"
      data-size="invisible" 
-     data-permanent></div>
+     data-permanent></div> *@
 
 @* <button class="g-recaptcha"
         data-sitekey="6LdRGRcaAAAAABbHTY4T3aLF9Zxe1J520LlnGYxN"
@@ -63,6 +63,6 @@
     Captcha Submit
 </button> *@
 
-@* <script src="@($"https://www.google.com/recaptcha/api.js?render={Configuration["Google:CaptchaKey"]}")"
+<script src="@($"https://www.google.com/recaptcha/api.js?render={Configuration["Google:CaptchaKey"]}")"
         async defer>
-</script> *@
+</script>
