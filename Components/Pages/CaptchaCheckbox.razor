@@ -1,0 +1,31 @@
+﻿@page "/captcha/checkbox"
+
+<PageScript Src="./Components/Pages/CaptchaCheckbox.razor.js" />
+
+<!--
+    ref: https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector
+    Can we use querySelector to find the form closest to the offcanvas that has 'show' class?
+    querySelector('div.offcanvas.show form')
+-->
+
+<div class="offcanvas offcanvas-start show">
+    <form>
+        <input type="hidden" name="Model.CaptchaToken" />
+        <button type="button">Register</button>
+    </form>
+    <div id="register-captcha"></div>
+</div>
+
+<hr />
+
+<div class="offcanvas offcanvas-start">
+    <form>
+        <input type="hidden" name="Model.CaptchaToken" />
+        <button type="button">Sign In</button>
+    </form>
+    <div id="login-captcha"></div>
+</div>
+
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer>
+</script>
